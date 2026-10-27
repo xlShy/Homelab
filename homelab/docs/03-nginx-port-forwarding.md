@@ -25,10 +25,7 @@ Run a web server on the Ubuntu VM and open its page from my Windows browser.
 
 4. Opened `http://localhost:8080` in my Windows browser and the Nginx welcome page loaded.
 
-![Nginx page in browser](../screenshots/03-nginx-localhost-8080.png)
-
 ## Problems and fixes
-- TODO: describe any problems (for example, the page not loading until the rule or firewall was fixed). If none, write "None encountered."
+None encountered. yet..
 
 ## What I learned
-- TODO: one or two sentences.
