@@ -6,10 +6,10 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 
 | Item | Details |
 |---|---|
-| Host | Windows PC (TODO: CPU, RAM, storage) |
-| Hypervisor | VirtualBox (TODO: version) |
-| Main VM | Ubuntu (TODO: version), with Guest Additions 7.2.20 |
-| Firewall VM | OPNsense (TODO: version) |
+| Host | Windows PC |
+| Hypervisor | VirtualBox |
+| Main VM | Ubuntu, with Guest Additions 7.2.20 |
+| Firewall VM | OPNsense |
 
 ## Projects
 
