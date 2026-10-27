@@ -24,7 +24,4 @@ Build a small network with a firewall/router and a client machine, then practice
    - Watched the blocked traffic appear in **Live View**.
    - Removed the rule, applied the changes, and ping worked again.
 
-![Block rule in OPNsense](../screenshots/07-opnsense-rule.png)
-![Live View showing blocked ICMP](../screenshots/07-opnsense-liveview.png)
-
 ## Problems and fixes
