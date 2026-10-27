@@ -17,12 +17,6 @@ Servers usually have no graphical desktop, so administrators work almost entirel
 | `ufw` | Manage the firewall | `sudo ufw status` |
 | `ip a` | Show network interfaces and IP addresses | `ip a` |
 | `ping` | Test connectivity | `ping 8.8.8.8` |
-| `journalctl` | Read service logs | `journalctl -u webapp` |
-
-TODO: delete any command above you did not actually use, and add others you practiced (for example `chmod`, `cat`, `nano`, `grep`).
 
 ## Problems and fixes
-- TODO: describe any mistakes or errors you ran into, such as "permission denied" and how you fixed them.
-
-## What I learned
-- TODO: one or two sentences.
+no problems yet..
