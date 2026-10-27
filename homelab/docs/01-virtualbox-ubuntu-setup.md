@@ -8,8 +8,8 @@ A **hypervisor** (VirtualBox) lets one physical computer run other operating sys
 
 ## Steps
 1. Downloaded and installed VirtualBox from virtualbox.org.
-2. Downloaded the Ubuntu ISO (TODO: version) from ubuntu.com.
-3. Created a new VM in VirtualBox (TODO: RAM, CPU cores, disk size) and attached the ISO.
+2. Downloaded the Ubuntu ISO (25.04) from ubuntu.com.
+3. Created a new VM in VirtualBox (4GB RAM, 4 Cores, 50GB Disk size) and attached the ISO.
 4. Started the VM and completed the Ubuntu installation.
 5. Installed Guest Additions 7.2.20:
    ```bash
@@ -21,7 +21,4 @@ A **hypervisor** (VirtualBox) lets one physical computer run other operating sys
 ![VM running Ubuntu](../screenshots/01-ubuntu-desktop.png)
 
 ## Problems and fixes
-- TODO: describe any errors you hit (for example, the Guest Additions install failing, or the VM not booting). If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences.
+-None encountered, yet..
