@@ -55,10 +55,8 @@ Run a small Python web app that reads from the MariaDB `students` table, keep it
    ```
 5. Opened `http://localhost:8080/students` from Windows and saw the table data.
 
-![Students page in browser](../screenshots/06-students-page.png)
 
 ## Problems and fixes
-- TODO: describe any problems (for example, a service failing to start and how `journalctl -u webapp` helped). If none, write "None encountered."
+
 
 ## What I learned
-- TODO: one or two sentences.
