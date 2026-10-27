@@ -33,10 +33,6 @@ Install a database server and create a database with a limited-privilege user.
 
 > Never put real passwords in a public repo.
 
-![MariaDB query output](../screenshots/05-mariadb-students.png)
 
 ## Problems and fixes
-- TODO: describe any problems. If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences.
+None encountered, yet..
