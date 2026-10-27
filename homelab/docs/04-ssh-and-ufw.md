@@ -24,10 +24,5 @@ Connect to the VM remotely from Windows PowerShell and protect it with a firewal
    ssh -p 2222 <username>@127.0.0.1
    ```
 
-![SSH session from PowerShell](../screenshots/04-ssh-powershell.png)
-
 ## Problems and fixes
-- TODO: describe any problems (for example, connection refused or a firewall blocking SSH). If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences.
+None encountered, yet..
