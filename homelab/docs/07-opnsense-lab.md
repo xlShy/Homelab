@@ -28,7 +28,3 @@ Build a small network with a firewall/router and a client machine, then practice
 ![Live View showing blocked ICMP](../screenshots/07-opnsense-liveview.png)
 
 ## Problems and fixes
-- TODO: describe any problems (for example, the client not getting an IP, or a rule not taking effect until applied). If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences. For example: how rule order and applying changes affect firewall behavior.
