@@ -55,8 +55,4 @@ Run a small Python web app that reads from the MariaDB `students` table, keep it
    ```
 5. Opened `http://localhost:8080/students` from Windows and saw the table data.
 
-
 ## Problems and fixes
-
-
-## What I learned
