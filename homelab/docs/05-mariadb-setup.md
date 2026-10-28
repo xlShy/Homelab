@@ -21,10 +21,9 @@ Install a database server and create a database with a limited-privilege user.
    GRANT ALL PRIVILEGES ON practice.* TO 'appuser'@'localhost';
    FLUSH PRIVILEGES;
    ```
-3. Created a `students` table and added sample rows (TODO: columns used).
+3. Created a `students` table and added sample rows .
    ```sql
    USE practice;
-   -- TODO: paste your CREATE TABLE and INSERT statements
    ```
 4. Tested logging in as the new user:
    ```bash
@@ -33,6 +32,5 @@ Install a database server and create a database with a limited-privilege user.
 
 > Never put real passwords in a public repo.
 
-
 ## Problems and fixes
-None encountered, yet..
+
