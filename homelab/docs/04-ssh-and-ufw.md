@@ -25,4 +25,3 @@ Connect to the VM remotely from Windows PowerShell and protect it with a firewal
    ```
 
 ## Problems and fixes
-None encountered, yet..
