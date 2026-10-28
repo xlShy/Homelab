@@ -18,7 +18,5 @@ A **hypervisor** (VirtualBox) lets one physical computer run other operating sys
    ```
    Then in the VM window: **Devices > Insert Guest Additions CD image**, and ran the installer from the mounted disc (TODO: confirm exact command used). Rebooted the VM.
 
-![VM running Ubuntu](../screenshots/01-ubuntu-desktop.png)
-
 ## Problems and fixes
 -None encountered, yet..
