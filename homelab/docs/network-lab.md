@@ -97,14 +97,6 @@ Ubuntu client (10.10.10.50, reserved)
 - Modern Ubuntu uses NetworkManager, so `nmcli` replaces `dhclient` for renewing leases.
 - Writing each issue as a ticket forces a clear sequence: symptom, checks, cause, fix, verification.
 
-## Screenshots
-
-Add screenshots to the `screenshots/` folder and link them here, for example:
-
-- `screenshots/01-opnsense-lan-rules.png`: firewall rules with the test block rule above the default allow rule
-- `screenshots/02-live-view-blocked-icmp.png`: Live View showing blocked ICMP
-- `screenshots/03-ip-a-reserved-address.png`: client with `10.10.10.50`
-- `screenshots/04-dig-fileserver-lab.png`: `dig` and `ping` for `fileserver.lab`
 
 ## Next steps
 
