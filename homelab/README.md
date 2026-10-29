@@ -10,6 +10,7 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 | Hypervisor | VirtualBox |
 | Main VM | Ubuntu, with Guest Additions 7.2.20 |
 | Firewall VM | OPNsense |
+| Client VM | Cloned Ubuntu VM on an internal network (LAN-A) |
 
 ## Projects
 
@@ -22,6 +23,8 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 | 5 | [MariaDB setup](docs/05-mariadb-setup.md) | Databases, least-privilege users |
 | 6 | [Flask web app](docs/06-flask-webapp.md) | systemd services, reverse proxy |
 | 7 | [OPNsense two-network lab](docs/07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
+| 8 | [DHCP reservation and DNS override](docs/08-dhcp-dns.md) | DHCP and DNS services, fixed IPs, troubleshooting a broken config |
+| 9 | [Ticket log](docs/09-ticket-log.md) | Documenting issues, cause, and fix like a help desk ticket |
 
 ## Skills demonstrated
 
@@ -29,5 +32,6 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 - Installing and configuring services (Nginx, MariaDB, OpenSSH)
 - Host and network firewalls (ufw, OPNsense)
 - NAT port forwarding and internal networks in VirtualBox
+- DHCP reservations and DNS host overrides
 - Managing services with systemd
-- Troubleshooting and documenting my work
+- Troubleshooting and documenting my work in a ticket log
