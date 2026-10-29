@@ -15,7 +15,7 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 
 | # | Project | What it shows |
 |---|---|---|
-| 1 | [VirtualBox and Ubuntu VM setup](docs/01-virtualbox-ubuntu-setup.md) | Virtualization, OS installation |
+| 1 | [VirtualBox and Ubuntu VM setup](homelab/docs/01-virtualbox-ubuntu-setup.md) | Virtualization, OS installation |
 | 2 | [Linux commands](docs/02-linux-commands.md) | Command-line basics |
 | 3 | [Nginx and port forwarding](docs/03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
 | 4 | [SSH and ufw firewall](docs/04-ssh-and-ufw.md) | Remote access, host firewall |
