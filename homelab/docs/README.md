@@ -15,16 +15,16 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 
 | # | Project | What it shows |
 |---|---|---|
-| 1 | [VirtualBox and Ubuntu VM setup](docs/01-virtualbox-ubuntu-setup.md) | Virtualization, OS installation |
-| 2 | [Linux commands](docs/02-linux-commands.md) | Command-line basics |
-| 3 | [Nginx and port forwarding](docs/03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
-| 4 | [SSH and ufw firewall](docs/04-ssh-and-ufw.md) | Remote access, host firewall |
-| 5 | [MariaDB setup](docs/05-mariadb-setup.md) | Databases, least-privilege users |
-| 6 | [Flask web app](docs/06-flask-webapp.md) | systemd services, reverse proxy |
-| 7 | [OPNsense two-network lab](docs/07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
-| 8 | [DHCP reservation](docs/08-dhcp-reservation.md) | DHCP, static addressing by MAC |
-| 9 | [DNS host override](docs/09-dns-host-override.md) | DNS, break/fix troubleshooting |
-| 10 | [Ticket log](docs/10-ticket-log.md) | Help desk documentation |
+| 1 | [VirtualBox and Ubuntu VM setup](homelab/docs/01-virtualbox-ubuntu-setup.md) | Virtualization, OS installation |
+| 2 | [Linux commands](homelab/docs/02-linux-commands.md) | Command-line basics |
+| 3 | [Nginx and port forwarding](homelab/docs/03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
+| 4 | [SSH and ufw firewall](homelab/docs/04-ssh-and-ufw.md) | Remote access, host firewall |
+| 5 | [MariaDB setup](homelab/docs/05-mariadb-setup.md) | Databases, least-privilege users |
+| 6 | [Flask web app](homelab/docs/06-flask-webapp.md) | systemd services, reverse proxy |
+| 7 | [OPNsense two-network lab](homelab/docs/07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
+| 8 | [DHCP reservation](homelab/docs/08-dhcp-reservation.md) | DHCP, static addressing by MAC |
+| 9 | [DNS host override](homelab/docs/09-dns-host-override.md) | DNS, break/fix troubleshooting |
+| 10 | [Ticket log](homelab/docs/10-ticket-log.md) | Help desk documentation |
 
 ## Skills demonstrated
 
