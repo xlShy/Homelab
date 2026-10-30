@@ -6,7 +6,7 @@ Practice documenting issues the way a help desk does, with a clear problem, step
 ## Concept
 IT support is judged as much on documentation as on fixes. A good ticket lets another technician understand what happened without asking. Each entry below follows the same pattern: symptom, diagnosis, resolution, and what I'd tell the user.
 
-All tickets were worked in my home lab: an OPNsense firewall, an Ubuntu client, and a Windows Server 2022 domain controller (`corp.lab`) on an isolated VirtualBox network.
+All tickets were worked in my home lab on an isolated VirtualBox network: an OPNsense firewall, an Ubuntu client, a Windows Server 2022 domain controller (`DC01`, domain `corp.lab`), and a Windows 11 Enterprise client (`PC01`) joined to that domain.
 
 ## Tickets
 
@@ -64,9 +64,26 @@ All tickets were worked in my home lab: an OPNsense firewall, an Ubuntu client, 
 - **Resolution:** Reset the password and ticked "User must change password at next logon", so only the user knows the final password.
 - **Message to the user:** "Your password has been reset. Sign in with the temporary one and you will be prompted to set a new one."
 
+### #006: New computer cannot sign in domain users (domain join)
+- **Reported issue:** A new Windows 11 PC (`PC01`) needed to join the company domain so employees could sign in with their domain accounts.
+- **Troubleshooting steps:**
+  1. Checked what DNS server the PC was using. It received DNS from the firewall's DHCP, and the firewall knows nothing about `corp.lab`, so the join would have failed with "domain controller could not be contacted."
+  2. Pointed the PC's DNS at the domain controller (`10.10.10.10`).
+  3. Verified with `nslookup corp.lab` and `nslookup dc01.corp.lab`. Both returned `10.10.10.10`.
+  4. Renamed the computer to `PC01` with `Rename-Computer`.
+  5. Opened `sysdm.cpl` to join the domain, but the System Properties dialog became unresponsive. Restarted the VM, which also applied the rename.
+  6. Joined the domain from an elevated PowerShell prompt instead: `Add-Computer -DomainName corp.lab -Credential CORP\Administrator -Restart`.
+- **Root cause:** Not a fault; this was a new-device request. The one problem along the way was the unresponsive GUI dialog, which I worked around with the command line. The key prerequisite was DNS, because a computer finds the domain controller through DNS records only the DC holds.
+- **Resolution:** `PC01` joined `corp.lab`, and the sign-in screen offered the `CORP` domain. Signed in as a domain user (`msantos`). Then moved the computer account into the `PCs` OU in Active Directory so Group Policy can be applied to it.
+- **Verification:** `whoami` returned `corp\msantos`, `hostname` returned `PC01`, and `PC01` appeared in the `PCs` OU in Active Directory Users and Computers.
+- **Message to the user:** "Your computer is now part of the company network. Sign in with your work username and password, and tell me if you can't get in."
+
 ## What I learned
 - Firewall rules are checked top to bottom, and the logs show which rule acted on a packet.
 - A DHCP reservation ties a MAC address to a fixed IP, and it is worth checking which DHCP service is actually running before changing anything.
 - A name problem and a connection problem look the same to a user. Comparing `dig` (what address did DNS return?) with a ping by IP separates them.
 - In Active Directory, OUs organize accounts and groups grant access. Most daily tickets are account tasks like creating users and resetting passwords.
+- Joining a domain depends on DNS. The client must use the domain controller as its DNS server, and `nslookup corp.lab` is the first check when a join fails.
+- When a GUI tool hangs, the same task can usually be done from PowerShell (`Rename-Computer`, `Add-Computer`).
+- Computer accounts live in Active Directory like users do, and they belong in an OU you control so Group Policy can apply to them.
 - Writing the ticket as symptom, checks, cause, fix, and message to the user forces a clear method, and it makes handing work to another technician easy.
