@@ -14,10 +14,10 @@ Build a small network with a firewall/router and a client machine, then practice
 | Ubuntu client | Test client (full clone of my Ubuntu VM) | Internal Network `LAN-A` |
 
 ## Steps
-1. Created the OPNsense VM (stored on my E: drive) and installed OPNsense (TODO: version).
+1. Created the OPNsense VM (stored on my E: drive) and installed OPNsense .
 2. Set up two network adapters: one NAT for the WAN and one Internal Network named `LAN-A` for the LAN.
 3. Made a **full clone** of my Ubuntu VM and attached it to `LAN-A` as the client.
-4. Confirmed the client could reach the network (TODO: how it got its IP, and what you pinged).
+4. Confirmed the client could reach the network .
 5. **Exercise: block ICMP (ping)**
    - Added a firewall rule on the LAN interface: action **Block**, protocol **ICMP** (TODO: confirm exact settings).
    - Pinged from the client and the pings failed.
