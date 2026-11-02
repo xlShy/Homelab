@@ -23,5 +23,3 @@ Connect to the VM remotely from Windows PowerShell and protect it with a firewal
    ```powershell
    ssh -p 2222 <username>@127.0.0.1
    ```
-
-## Problems and fixes
