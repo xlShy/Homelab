@@ -57,9 +57,9 @@ corp.lab
 ## Tools and commands used
 
 - Linux: `ip a`, `ip route`, `ping`, `dig`, `nmcli`, `resolvectl`
-- Windows: `ipconfig`, `nslookup`, `whoami`, `hostname`, `dcdiag`, PowerShell (`Rename-Computer`, `Add-Computer`, `Get-ADUser`, `Get-ADGroupMember`)
+- Windows: `ipconfig`, `nslookup`, `whoami`, `hostname`, `dcdiag`, `gpupdate`, PowerShell (`Rename-Computer`, `Add-Computer`, `Get-ADUser`, `Get-ADGroupMember`)
 - OPNsense web GUI: firewall rules, Live View logs, Dnsmasq DHCP, Unbound DNS
-- Active Directory Users and Computers, DNS Manager
+- Active Directory Users and Computers, DNS Manager, Group Policy Management
 
 ## Tickets
 
@@ -71,7 +71,8 @@ corp.lab
 | 004 | New employee needs a domain account | Active Directory |
 | 005 | User forgot their password | Active Directory |
 | 006 | New computer needs to join the domain | Active Directory, DNS |
-| 007 | Packet capture of DHCP, DNS, and ICMP (in progress) | Troubleshooting |
+| 007 | User account locked out (Group Policy lockout threshold) | Active Directory, Group Policy |
+| 008 | Packet capture of DHCP, DNS, and ICMP (in progress) | Troubleshooting |
 
 Full details for each are in [ticket-log.md](ticket-log.md).
 
@@ -82,12 +83,13 @@ Full details for each are in [ticket-log.md](ticket-log.md).
 - A name problem and a connection problem look the same to a user. Comparing `dig` or `nslookup` with a ping by IP separates them.
 - Active Directory depends on DNS. A computer finds the domain controller through DNS, so a client must use the DC as its DNS server before it can join.
 - OUs organize, groups grant access, and most daily tickets are account tasks.
+- Group Policy pushes settings from the domain controller. Lockout and password rules for domain accounts are set at the domain level, and a locked account rejects even the correct password until it is unlocked.
 - When a GUI tool hangs, PowerShell can usually do the same job.
 
 
 ## Next steps
 
-- Packet capture exercise (ticket 007).
-- Group Policy: password policy, account lockout and unlock, and a mapped drive or wallpaper policy.
+- Packet capture exercise (ticket 008).
+- More Group Policy: a password policy, plus a policy linked to the `Sales` or `PCs` OU such as a wallpaper or mapped drive.
 - Second internal network (`LAN-B`) with firewall rules between the two networks.
 - Monitoring, a WireGuard VPN, and Microsoft 365 admin practice.
