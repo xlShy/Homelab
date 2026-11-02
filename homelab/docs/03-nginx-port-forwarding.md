@@ -24,5 +24,3 @@ Run a web server on the Ubuntu VM and open its page from my Windows browser.
    | HTTP | TCP | 8080 | 80 |
 
 4. Opened `http://localhost:8080` in my Windows browser and the Nginx welcome page loaded.
-
-## Problems and fixes
