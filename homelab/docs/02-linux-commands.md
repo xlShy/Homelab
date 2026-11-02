@@ -17,6 +17,3 @@ Servers usually have no graphical desktop, so administrators work almost entirel
 | `ufw` | Manage the firewall | `sudo ufw status` |
 | `ip a` | Show network interfaces and IP addresses | `ip a` |
 | `ping` | Test connectivity | `ping 8.8.8.8` |
-
-## Problems and fixes
-no problems yet..
