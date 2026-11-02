@@ -27,9 +27,3 @@ Create a local DNS name, `fileserver.lab`, so machines on LAN-A can reach a host
 2. **Symptom:** the name resolved to the wrong address, so (TODO: what happened, e.g. ping timed out).
 3. **Diagnosis:** compared the `nslookup` result against the expected IP, which showed the record was wrong.
 4. **Fix:** corrected the IP in the override, applied the change, and tested again. The name resolved correctly.
-
-## Problems and fixes
-- TODO: add any other problems (for example, the client caching the old answer). If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences. For example: a name that resolves isn't proof it resolves correctly, so compare the result against the expected IP.
