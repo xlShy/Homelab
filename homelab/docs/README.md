@@ -21,12 +21,11 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 | 3 | [Nginx and port forwarding](03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
 | 4 | [SSH and ufw firewall](04-ssh-and-ufw.md) | Remote access, host firewall |
 | 5 | [MariaDB setup](05-mariadb-setup.md) | Databases, least-privilege users |
-| 6 | [Flask web app](06-flask-webapp.md) | systemd services, reverse proxy |
-| 7 | [OPNsense two-network lab](07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
-| 8 | [DHCP reservation](08-dhcp-reservation.md) | DHCP service, fixed IPs for lab machines |
-| 9 | [DNS host override](09-dns-host-override.md) | Local DNS, name resolution, troubleshooting a broken config |
-| 10 | [Ticket log](10-ticket-log.md) | Documenting issues, cause, and fix like a help desk ticket |
-| 11 | [Network lab](network-lab.md) | Networking, VirtualBox internal networks |
+| 6 | [OPNsense two-network lab](07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
+| 7 | [DHCP reservation](08-dhcp-reservation.md) | DHCP service, fixed IPs for lab machines |
+| 8 | [DNS host override](09-dns-host-override.md) | Local DNS, name resolution, troubleshooting a broken config |
+| 9 | [Ticket log](10-ticket-log.md) | Documenting issues, cause, and fix like a help desk ticket |
+| 10 | [Network lab](network-lab.md) | Networking, VirtualBox internal networks |
 
 ## Skills demonstrated
 
