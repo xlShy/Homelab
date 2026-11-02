@@ -16,19 +16,14 @@ Make the Ubuntu client on LAN-A always receive the same IP address (10.10.10.50)
 
    | Field | Value |
    |---|---|
-   | Host | TODO: hostname |
+   | Host | joe-VirtualBox |
    | IP address | 10.10.10.50 |
-   | Hardware address | TODO: client MAC |
+   | Hardware address | 10.10.10.50/24 |
 
 3. Saved and applied the changes.
 4. Renewed the lease on the client (or rebooted it) and checked the address:
    ```bash
    ip a
    ```
-   Output showed `10.10.10.50`. (TODO: paste the relevant line here.)
+   Output showed `10.10.10.50`.
 
-## Problems and fixes
-- TODO: describe any problems (for example, the client keeping its old IP until the lease was renewed). If none, write "None encountered."
-
-## What I learned
-- TODO: one or two sentences.
