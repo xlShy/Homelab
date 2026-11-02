@@ -78,6 +78,15 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - **Verification:** `whoami` returned `corp\msantos`, `hostname` returned `PC01`, and `PC01` appeared in the `PCs` OU in Active Directory Users and Computers.
 - **Message to the user:** "Your computer is now part of the company network. Sign in with your work username and password, and tell me if you can't get in."
 
+### #007: User account locked out
+- **Reported issue:** A user, Maria Santos, could not sign in on `PC01`, even when entering her password.
+- **Troubleshooting steps:**
+  1. Confirmed the account was the problem, not the PC or the network, by checking the account state on the domain controller: `Get-ADUser msantos -Properties LockedOut | Select Name, LockedOut`. It returned `LockedOut: True`.
+  2. Checked why. The domain's Account Lockout Policy (set in the Default Domain Policy, with a threshold of 3 invalid attempts and applied with `gpupdate /force`) locks an account after three wrong passwords, and the lockout was triggered by three failed sign-ins on `PC01`.
+- **Root cause:** Three failed sign-in attempts reached the lockout threshold in Group Policy. Once an account is locked, even the correct password is rejected until it is unlocked or the lockout period ends.
+- **Resolution:** Unlocked the account in Active Directory. Re-ran the same `Get-ADUser` check and it returned `LockedOut: False`, then the user signed in on `PC01` with the correct password.
+- **Message to the user:** "Your account was locked after too many wrong password attempts. I've unlocked it, so please try again. If it locks again, let me know, because something may be using an old saved password."
+
 ## What I learned
 - Firewall rules are checked top to bottom, and the logs show which rule acted on a packet.
 - A DHCP reservation ties a MAC address to a fixed IP, and it is worth checking which DHCP service is actually running before changing anything.
@@ -86,4 +95,6 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - Joining a domain depends on DNS. The client must use the domain controller as its DNS server, and `nslookup corp.lab` is the first check when a join fails.
 - When a GUI tool hangs, the same task can usually be done from PowerShell (`Rename-Computer`, `Add-Computer`).
 - Computer accounts live in Active Directory like users do, and they belong in an OU you control so Group Policy can apply to them.
+- Group Policy applies settings from the domain controller to users and computers. Account lockout and password rules for domain accounts must be set at the domain level, and `gpupdate /force` applies a change right away.
+- A locked-out account rejects even the correct password, so the first check is the account state (`LockedOut`), not the password.
 - Writing the ticket as symptom, checks, cause, fix, and message to the user forces a clear method, and it makes handing work to another technician easy.
