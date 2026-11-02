@@ -11,19 +11,31 @@ Create a local DNS name, `fileserver.lab`, so machines on LAN-A can reach a host
 
    | Field | Value |
    |---|---|
-   | Host | fileserver |
-   | Domain | lab |
-   | IP address | TODO: correct IP |
+   | Host | ubuntu-client |
+   | Domain |  |
+   | IP address | 10.10.10.50 |
 
 2. From the Ubuntu client, tested the name:
    ```bash
    nslookup fileserver.lab
    ping fileserver.lab
    ```
-   (TODO: paste the output.)
+   Server:		127.0.0.53
+   Address:	127.0.0.53#53
 
-## Break and fix exercise
-1. **Broke it on purpose:** changed the record to a wrong IP address (TODO: which IP).
-2. **Symptom:** the name resolved to the wrong address, so (TODO: what happened, e.g. ping timed out).
-3. **Diagnosis:** compared the `nslookup` result against the expected IP, which showed the record was wrong.
-4. **Fix:** corrected the IP in the override, applied the change, and tested again. The name resolved correctly.
+   Non-authoritative answer:
+   Name:	fileserver.lab
+   Address: 10.10.10.50
+   
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=1 ttl=64 time=0.024 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=2 ttl=64 time=0.075 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=3 ttl=64 time=0.035 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=4 ttl=64 time=0.330 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=5 ttl=64 time=0.036 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=6 ttl=64 time=0.036 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=7 ttl=64 time=0.038 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=8 ttl=64 time=0.037 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=9 ttl=64 time=0.040 ms
+   64 bytes from fileserver.lab (10.10.10.50): icmp_seq=10 ttl=64 time=0.047 ms
+
+
