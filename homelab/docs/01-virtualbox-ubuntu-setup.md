@@ -17,6 +17,3 @@ A **hypervisor** (VirtualBox) lets one physical computer run other operating sys
    sudo apt install build-essential dkms linux-headers-$(uname -r)
    ```
    Then in the VM window: **Devices > Insert Guest Additions CD image**, and ran the installer from the mounted disc (TODO: confirm exact command used). Rebooted the VM.
-
-## Problems and fixes
--None encountered, yet..
