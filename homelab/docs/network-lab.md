@@ -86,20 +86,6 @@ Full details for each are in [ticket-log.md](ticket-log.md).
 - Group Policy pushes settings from the domain controller. Lockout and password rules for domain accounts are set at the domain level, and a locked account rejects even the correct password until it is unlocked.
 - When a GUI tool hangs, PowerShell can usually do the same job.
 
-## Screenshots
-
-Add screenshots to the `screenshots/` folder and link them here, for example:
-
-- `screenshots/01-opnsense-lan-rules.png`: firewall rules with the test block rule above the default allow rule
-- `screenshots/02-live-view-blocked-icmp.png`: Live View showing blocked ICMP
-- `screenshots/03-dig-fileserver-lab.png`: `dig` and `ping` for `fileserver.lab`
-- `screenshots/04-ad-users-and-computers.png`: the `corp.lab` OU structure
-- `screenshots/05-group-membership.png`: `Get-ADGroupMember` output for both groups
-- `screenshots/06-whoami-pc01.png`: `whoami` and `hostname` on `PC01`
-- `screenshots/07-pc01-in-pcs-ou.png`: `PC01` in the `PCs` OU
-- `screenshots/08-lockout-policy.png`: the Account Lockout Policy setting in the Default Domain Policy
-- `screenshots/09-locked-out-then-unlocked.png`: `Get-ADUser` showing `LockedOut: True`, then `False`
-
 ## Next steps
 
 - Packet capture exercise (ticket 008).
