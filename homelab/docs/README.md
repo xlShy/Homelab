@@ -1,100 +1,37 @@
-# Help Desk Ticket Log
+# Homelab
 
-## Goal
-Practice documenting issues the way a help desk does, with a clear problem, steps taken, and resolution.
+A VirtualBox lab on my Windows PC where I practice Linux administration, web hosting, databases, and basic networking. I built it to get hands-on experience for IT support and network support roles.
 
-## Concept
-IT support is judged as much on documentation as on fixes. A good ticket lets another technician understand what happened without asking. Each entry below follows the same pattern: symptom, diagnosis, resolution, and what I'd tell the user.
+## Environment
 
-All tickets were worked in my home lab on an isolated VirtualBox network: an OPNsense firewall, an Ubuntu client, a Windows Server 2022 domain controller (`DC01`, domain `corp.lab`), and a Windows 11 Enterprise client (`PC01`) joined to that domain.
+| Item | Details |
+|---|---|
+| Host | Windows PC |
+| Hypervisor | VirtualBox |
+| Main VM | Ubuntu, with Guest Additions 7.2.20 |
+| Firewall VM | OPNsense |
+| Client VM | Cloned Ubuntu VM on an internal network (LAN-A) |
 
-## Tickets
+## Projects
 
-### #001: Client cannot ping external hosts
-- **Reported issue:** A client on the LAN could not reach the internet by ping. `ping 8.8.8.8` showed 100% packet loss.
-- **Troubleshooting steps:**
-  1. `ip a` showed the client had a valid address.
-  2. `ip route` showed the default gateway was `10.10.10.1`.
-  3. `ping 10.10.10.1` succeeded, so the link to the firewall was fine.
-  4. Checked the firewall's LAN rules and the Live View log. The log showed blocked ICMP packets tagged with a specific rule.
-- **Root cause:** An ICMP block rule sat above the default "allow LAN to any" rule. Rules are checked top to bottom and the first match wins, so pings were blocked before the allow rule was reached.
-- **Resolution:** Deleted the block rule and applied the change. `ping 8.8.8.8` replied at about 18 ms.
-- **Message to the user:** "Ping traffic to the internet was being blocked by a firewall rule. I removed it and connectivity is back to normal."
+| # | Project | What it shows |
+|---|---|---|
+| 1 | [VirtualBox and Ubuntu VM setup](docs/01-virtualbox-ubuntu-setup.md) | Virtualization, OS installation |
+| 2 | [Linux commands](docs/02-linux-commands.md) | Command-line basics |
+| 3 | [Nginx and port forwarding](docs/03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
+| 4 | [SSH and ufw firewall](docs/04-ssh-and-ufw.md) | Remote access, host firewall |
+| 5 | [MariaDB setup](docs/05-mariadb-setup.md) | Databases, least-privilege users |
+| 6 | [Flask web app](docs/06-flask-webapp.md) | systemd services, reverse proxy |
+| 7 | [OPNsense two-network lab](docs/07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
+| 8 | [DHCP reservation and DNS override](docs/08-dhcp-dns.md) | DHCP and DNS services, fixed IPs, troubleshooting a broken config |
+| 9 | [Ticket log](docs/09-ticket-log.md) | Documenting issues, cause, and fix like a help desk ticket |
 
-### #002: Client needs a fixed IP address
-- **Reported issue:** A lab client needed a permanent address so other systems could always find it. Its address came from a dynamic pool and could change (it had `10.10.10.157`).
-- **Troubleshooting steps:**
-  1. Read the client's MAC address with `ip link show enp0s3`.
-  2. Found out which DHCP service was actually running. The Kea leases page was empty, and the lease appeared under Dnsmasq.
-  3. Added a static host entry in Dnsmasq (client MAC, `10.10.10.50`, hostname `ubuntu-client`), outside the dynamic pool.
-  4. Renewed the lease. `dhclient` was not installed, so I used `nmcli`. The first renewal still returned the old address.
-  5. After making sure the entry was saved and applied and the old lease was cleared, renewed again.
-- **Root cause:** Not a fault; this was a change request. The first renewal failed because the reservation had not taken effect on the running DHCP service yet.
-- **Resolution:** The client now receives `10.10.10.50` every time. Confirmed with `ip a` and the Dnsmasq leases page.
-- **Message to the user:** "Your machine now has a permanent address, `10.10.10.50`, so anything that points to it will keep working."
+## Skills demonstrated
 
-### #003: Users cannot reach `fileserver.lab` by name
-- **Reported issue:** `ping fileserver.lab` failed.
-- **Troubleshooting steps:**
-  1. `dig fileserver.lab` returned `10.10.10.99`, which was the wrong address.
-  2. `ping 10.10.10.50` by IP worked, so the machine itself was reachable.
-  3. Checked the DNS host override in Unbound.
-- **Root cause:** The DNS host override pointed at the wrong IP address. This was introduced on purpose to practice telling name problems apart from connectivity problems.
-- **Resolution:** Corrected the override to `10.10.10.50`, applied it, and flushed the client's DNS cache with `sudo resolvectl flush-caches`. `dig` and `ping` both worked afterwards.
-- **Message to the user:** "The server's name was pointing to the wrong address. I corrected it, and you can reach it by name again. If it still fails, restart your computer to clear the old answer."
-
-### #004: New employee needs a domain account
-- **Reported issue:** A new hire, Maria Santos, joining the Sales department needs a network account.
-- **Troubleshooting steps:**
-  1. Built the directory structure first: a `Departments` OU with `Sales` and `IT` OUs inside it.
-  2. Created the user `msantos` in the `Sales` OU with a temporary password and "User must change password at next logon" ticked.
-  3. Created a global security group `GG-Sales` and added the new user to it, so access can be granted to the group instead of to each person.
-  4. Checked the result with `Get-ADUser` and `Get-ADGroupMember "GG-Sales"`.
-- **Root cause:** Not a fault; this was an onboarding request.
-- **Resolution:** Account created in the correct OU and added to the department group. The user is forced to choose a new password at first sign-in.
-- **Message to the user:** "Your account is ready. Sign in with the temporary password I will send you separately, and you will be asked to choose a new one."
-
-### #005: User forgot their password
-- **Reported issue:** A user could not sign in because they forgot their password.
-- **Troubleshooting steps:**
-  1. Confirmed the user's identity before doing anything. On a real help desk this means following the company's verification process.
-  2. Found the account in Active Directory Users and Computers.
-  3. Checked that the account was enabled and not locked, so the only issue was the password.
-- **Root cause:** Forgotten password.
-- **Resolution:** Reset the password and ticked "User must change password at next logon", so only the user knows the final password.
-- **Message to the user:** "Your password has been reset. Sign in with the temporary one and you will be prompted to set a new one."
-
-### #006: New computer cannot sign in domain users (domain join)
-- **Reported issue:** A new Windows 11 PC (`PC01`) needed to join the company domain so employees could sign in with their domain accounts.
-- **Troubleshooting steps:**
-  1. Checked what DNS server the PC was using. It received DNS from the firewall's DHCP, and the firewall knows nothing about `corp.lab`, so the join would have failed with "domain controller could not be contacted."
-  2. Pointed the PC's DNS at the domain controller (`10.10.10.10`).
-  3. Verified with `nslookup corp.lab` and `nslookup dc01.corp.lab`. Both returned `10.10.10.10`.
-  4. Renamed the computer to `PC01` with `Rename-Computer`.
-  5. Opened `sysdm.cpl` to join the domain, but the System Properties dialog became unresponsive. Restarted the VM, which also applied the rename.
-  6. Joined the domain from an elevated PowerShell prompt instead: `Add-Computer -DomainName corp.lab -Credential CORP\Administrator -Restart`.
-- **Root cause:** Not a fault; this was a new-device request. The one problem along the way was the unresponsive GUI dialog, which I worked around with the command line. The key prerequisite was DNS, because a computer finds the domain controller through DNS records only the DC holds.
-- **Resolution:** `PC01` joined `corp.lab`, and the sign-in screen offered the `CORP` domain. Signed in as a domain user (`msantos`). Then moved the computer account into the `PCs` OU in Active Directory so Group Policy can be applied to it.
-- **Verification:** `whoami` returned `corp\msantos`, `hostname` returned `PC01`, and `PC01` appeared in the `PCs` OU in Active Directory Users and Computers.
-- **Message to the user:** "Your computer is now part of the company network. Sign in with your work username and password, and tell me if you can't get in."
-
-### #007: User account locked out
-- **Reported issue:** A user, Maria Santos, could not sign in on `PC01`, even when entering her password.
-- **Troubleshooting steps:**
-  1. Confirmed the account was the problem, not the PC or the network, by checking the account state on the domain controller: `Get-ADUser msantos -Properties LockedOut | Select Name, LockedOut`. It returned `LockedOut: True`.
-  2. Checked why. The domain's Account Lockout Policy (set in the Default Domain Policy, with a threshold of 3 invalid attempts and applied with `gpupdate /force`) locks an account after three wrong passwords, and the lockout was triggered by three failed sign-ins on `PC01`.
-- **Root cause:** Three failed sign-in attempts reached the lockout threshold in Group Policy. Once an account is locked, even the correct password is rejected until it is unlocked or the lockout period ends.
-- **Resolution:** Unlocked the account in Active Directory. Re-ran the same `Get-ADUser` check and it returned `LockedOut: False`, then the user signed in on `PC01` with the correct password.
-- **Message to the user:** "Your account was locked after too many wrong password attempts. I've unlocked it, so please try again. If it locks again, let me know, because something may be using an old saved password."
-
-## What I learned
-- Firewall rules are checked top to bottom, and the logs show which rule acted on a packet.
-- A DHCP reservation ties a MAC address to a fixed IP, and it is worth checking which DHCP service is actually running before changing anything.
-- A name problem and a connection problem look the same to a user. Comparing `dig` (what address did DNS return?) with a ping by IP separates them.
-- In Active Directory, OUs organize accounts and groups grant access. Most daily tickets are account tasks like creating users and resetting passwords.
-- Joining a domain depends on DNS. The client must use the domain controller as its DNS server, and `nslookup corp.lab` is the first check when a join fails.
-- When a GUI tool hangs, the same task can usually be done from PowerShell (`Rename-Computer`, `Add-Computer`).
-- Computer accounts live in Active Directory like users do, and they belong in an OU you control so Group Policy can apply to them.
-- Group Policy applies settings from the domain controller to users and computers. Account lockout and password rules for domain accounts must be set at the domain level, and `gpupdate /force` applies a change right away.
-- A locked-out account rejects even the correct password, so the first check is the account state (`LockedOut`), not the password.
-- Writing the ticket as symptom, checks, cause, fix, and message to the user forces a clear method, and it makes handing work to another technician easy.
+- Linux (Ubuntu) administration from the command line
+- Installing and configuring services (Nginx, MariaDB, OpenSSH)
+- Host and network firewalls (ufw, OPNsense)
+- NAT port forwarding and internal networks in VirtualBox
+- DHCP reservations and DNS host overrides
+- Managing services with systemd
+- Troubleshooting and documenting my work in a ticket log
