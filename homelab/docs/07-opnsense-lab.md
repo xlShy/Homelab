@@ -23,5 +23,3 @@ Build a small network with a firewall/router and a client machine, then practice
    - Pinged from the client and the pings failed.
    - Watched the blocked traffic appear in **Live View**.
    - Removed the rule, applied the changes, and ping worked again.
-
-## Problems and fixes
