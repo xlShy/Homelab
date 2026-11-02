@@ -29,8 +29,3 @@ Install a database server and create a database with a limited-privilege user.
    ```bash
    mariadb -u appuser -p practice
    ```
-
-> Never put real passwords in a public repo.
-
-## Problems and fixes
-
