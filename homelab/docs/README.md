@@ -26,6 +26,7 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 | 8 | [DHCP reservation](08-dhcp-reservation.md) | DHCP service, fixed IPs for lab machines |
 | 9 | [DNS host override](09-dns-host-override.md) | Local DNS, name resolution, troubleshooting a broken config |
 | 10 | [Ticket log](10-ticket-log.md) | Documenting issues, cause, and fix like a help desk ticket |
+| 11 | [Network lab](network-lab.md) | Networking, VirtualBox internal networks |
 
 ## Skills demonstrated
 
