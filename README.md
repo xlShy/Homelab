@@ -20,7 +20,6 @@ A VirtualBox lab on my Windows PC where I practice Linux administration, web hos
 | 3 | [Nginx and port forwarding](homelab/docs/03-nginx-port-forwarding.md) | Web server, NAT port forwarding |
 | 4 | [SSH and ufw firewall](homelab/docs/04-ssh-and-ufw.md) | Remote access, host firewall |
 | 5 | [MariaDB setup](homelab/docs/05-mariadb-setup.md) | Databases, least-privilege users |
-| 6 | [Flask web app](homelab/docs/06-flask-webapp.md) | systemd services, reverse proxy |
 | 7 | [OPNsense two-network lab](homelab/docs/07-opnsense-lab.md) | Network firewall rules, traffic monitoring |
 | 8 | [DHCP reservation](homelab/docs/08-dhcp-reservation.md) | DHCP, static addressing by MAC |
 | 9 | [DNS host override](homelab/docs/09-dns-host-override.md) | DNS, break/fix troubleshooting |
