@@ -53,11 +53,12 @@ corp.lab
 - **OUs organize** accounts and computers, and are where Group Policy gets linked.
 - **Security groups grant access**, so permissions go to `GG-Sales` and `GG-IT` instead of to each person.
 - Computers go in the `PCs` OU, because the built-in `Computers` container cannot have Group Policy linked to it.
+- A shared folder on `DC01` (`\\DC01\Sales`) is restricted to `GG-Sales`, and a Group Policy linked to the `Sales` OU maps it as the `S:` drive at sign-in.
 
 ## Tools and commands used
 
 - Linux: `ip a`, `ip route`, `ping`, `dig`, `nmcli`, `resolvectl`, `tcpdump`
-- Windows: `ipconfig`, `nslookup`, `whoami`, `hostname`, `dcdiag`, `gpupdate`, PowerShell (`Rename-Computer`, `Add-Computer`, `Get-ADUser`, `Get-ADGroupMember`)
+- Windows: `ipconfig`, `nslookup`, `whoami`, `hostname`, `dcdiag`, `gpupdate`, `gpresult`, PowerShell (`Rename-Computer`, `Add-Computer`, `Get-ADUser`, `Get-ADGroupMember`, `New-SmbShare`)
 - OPNsense web GUI: firewall rules, Live View logs, Dnsmasq DHCP, Unbound DNS
 - Active Directory Users and Computers, DNS Manager, Group Policy Management
 
@@ -73,6 +74,7 @@ corp.lab
 | 006 | New computer needs to join the domain | Active Directory, DNS |
 | 007 | User account locked out (Group Policy lockout threshold) | Active Directory, Group Policy |
 | 008 | Packet capture of DHCP, DNS, and ping to verify normal behavior | Troubleshooting |
+| 009 | Sales staff need a shared department folder (mapped drive via Group Policy) | Group Policy, file sharing |
 
 Full details for each are in [ticket-log.md](ticket-log.md).
 
@@ -85,10 +87,11 @@ Full details for each are in [ticket-log.md](ticket-log.md).
 - OUs organize, groups grant access, and most daily tickets are account tasks.
 - Group Policy pushes settings from the domain controller. Lockout and password rules for domain accounts are set at the domain level, and a locked account rejects even the correct password until it is unlocked.
 - When a GUI tool hangs, PowerShell can usually do the same job.
+- Shared folders have two permission layers (share and NTFS), and the stricter one wins. Which users get a drive letter (the Group Policy link) is separate from who can open the folder (group membership).
 - A packet capture shows what really crossed the wire, and it must be running before the action I want to record. It gives a known-good baseline for DHCP, DNS, and ping to compare against when something breaks.
 
 ## Next steps
 
-- More Group Policy: a password policy, plus a policy linked to the `Sales` or `PCs` OU such as a wallpaper or mapped drive.
+- More Group Policy: a password policy and a wallpaper or desktop-restriction policy linked to an OU.
 - Second internal network (`LAN-B`) with firewall rules between the two networks.
 - Monitoring, a WireGuard VPN, and Microsoft 365 admin practice.
