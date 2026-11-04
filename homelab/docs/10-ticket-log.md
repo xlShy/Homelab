@@ -87,6 +87,20 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - **Resolution:** Unlocked the account in Active Directory. Re-ran the same `Get-ADUser` check and it returned `LockedOut: False`, then the user signed in on `PC01` with the correct password.
 - **Message to the user:** "Your account was locked after too many wrong password attempts. I've unlocked it, so please try again. If it locks again, let me know, because something may be using an old saved password."
 
+### #008: Verify DHCP, DNS, and ping behavior with packet captures
+- **Reported issue:** No fault. I wanted proof of how DHCP, DNS, and ping actually work on the LAN, so I have a known-good baseline to compare against when something breaks.
+- **Troubleshooting steps:** Ran `tcpdump` on the Ubuntu client (`10.10.10.50`) and generated each kind of traffic from a second terminal.
+  1. **DNS:** `sudo tcpdump -i enp0s3 -n port 53`, then `dig @10.10.10.1 fileserver.lab`. A first attempt with a packet limit (`-c 2`) captured only Ubuntu's background `connectivity-check` lookups, because the limit stopped the capture before my query ran. Removing the limit fixed it.
+  2. **Ping:** `sudo tcpdump -i enp0s3 -n -c 6 icmp`, then `ping -c 3 8.8.8.8`.
+  3. **DHCP:** `sudo tcpdump -i any -n -v port 67 or port 68`, then disconnected and reconnected the interface with `nmcli`. My first attempt captured nothing because the reconnect happened outside the capture window. I redid it with the capture running first.
+- **Findings:**
+  - **DNS:** the client sent an `A?` query for `fileserver.lab` to the firewall (`10.10.10.1`, port 53), and the firewall answered `10.10.10.50` about 1.2 ms later. The transaction ID (`36680`) matched the `dig` output, and the answer was flagged authoritative, so it came from the DNS override and not from the internet. In the background traffic, one query was sent again about 5 seconds later (a normal resolver retry) and answered immediately.
+  - **Ping:** three echo requests and three echo replies, one second apart, sharing the same ID and sequence numbers 1 to 3. Reply times of about 21 ms matched the `ping` output.
+  - **DHCP:** the client broadcast a Request from `0.0.0.0` asking for `10.10.10.50`, and the firewall answered with an ACK about 6 ms later. The ACK granted `10.10.10.50` with a 24-hour lease, gateway `10.10.10.1`, DNS `10.10.10.1`, and the hostname `ubuntu-client` from the DHCP reservation. There was no Discover or Offer, because the client reused its previous lease.
+- **Root cause:** Not applicable; this was a verification exercise and everything behaved as designed.
+- **Resolution:** Captured and documented the normal behavior of all three. A capture shows whether a request left the client and whether a reply came back, which tells me where to look when something fails. For example, requests with no replies (as in ticket #001) point to a block or a dead path, while replies with the wrong data (as in ticket #003) point to the answering service.
+- **Message to the user:** Not applicable (internal verification).
+
 ## What I learned
 - Firewall rules are checked top to bottom, and the logs show which rule acted on a packet.
 - A DHCP reservation ties a MAC address to a fixed IP, and it is worth checking which DHCP service is actually running before changing anything.
@@ -97,4 +111,6 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - Computer accounts live in Active Directory like users do, and they belong in an OU you control so Group Policy can apply to them.
 - Group Policy applies settings from the domain controller to users and computers. Account lockout and password rules for domain accounts must be set at the domain level, and `gpupdate /force` applies a change right away.
 - A locked-out account rejects even the correct password, so the first check is the account state (`LockedOut`), not the password.
+- A packet capture shows what really crossed the wire. Filters and packet limits can hide the traffic I wanted, and the capture must be running before the action I want to record.
+- DHCP can be just a Request and ACK when a client reuses its old lease, and the ACK carries everything the client needs: address, gateway, DNS, and lease time.
 - Writing the ticket as symptom, checks, cause, fix, and message to the user forces a clear method, and it makes handing work to another technician easy.
