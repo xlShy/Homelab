@@ -17,7 +17,7 @@ The full ticket write-ups are in [ticket-log.md](ticket-log.md). This page cover
 |---|---|---|
 | Host | VirtualBox on Windows | VMs stored on a separate hard drive |
 | `OPNsense` | Router, firewall, DHCP, DNS | OPNsense 26.7, 2 GB RAM, 2 CPUs, 20 GB disk |
-| `DC01` | Domain controller and DNS for `corp.lab` | Windows Server 2022 Standard Evaluation, 4 GB RAM, 2 CPUs, 50 GB disk |
+| `DC01` | Domain controller and DNS for `corp.lab` | Windows Server 2022 Standard Evaluation, 8 GB RAM, 2 CPUs, 50 GB disk |
 | `PC01` | Domain-joined client | Windows 11 Enterprise Evaluation, 4 GB RAM, 2 CPUs, 64 GB disk |
 | Ubuntu client | Linux client for network tests | Full clone of my Ubuntu practice VM |
 
