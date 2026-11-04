@@ -101,6 +101,18 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - **Resolution:** Captured and documented the normal behavior of all three. A capture shows whether a request left the client and whether a reply came back, which tells me where to look when something fails. For example, requests with no replies (as in ticket #001) point to a block or a dead path, while replies with the wrong data (as in ticket #003) point to the answering service.
 - **Message to the user:** Not applicable (internal verification).
 
+### #009: Sales staff need access to the department shared folder
+- **Reported issue:** Sales employees need a shared folder for department files that appears automatically on their computers, and staff from other departments (such as IT) should not see it.
+- **Troubleshooting steps:**
+  1. Created a folder on the domain controller (`C:\Shares\Sales`) and shared it as `Sales`.
+  2. Set permissions on both layers: the share and the NTFS permissions on the folder. Granted the `GG-Sales` group Modify access, kept full control for Administrators and SYSTEM, and removed the inherited permissions so other users get nothing.
+  3. Created a Group Policy Object, `Sales - Map S drive`, linked to the `Sales` OU. It uses a Drive Maps preference to map `S:` to `\\DC01\Sales`.
+  4. Tested on `PC01`, signing in as a Sales user (`msantos`) and as an IT user (`areyes`).
+- **Root cause:** Not a fault; this was an access request.
+- **Resolution:** The shared folder now appears as **Sales Share (S:)** automatically when a Sales user signs in. Maria could open the existing welcome file and created a new file of her own, which confirms she has write access. Ana (IT) signed in on the same PC and had no `S:` drive.
+- **Verification:** Screenshots of the `S:` drive with both files on Maria's session, and of Ana's This PC showing only the local disk and the CD drive.
+- **Message to the user:** "Your Sales folder now appears as the S: drive when you sign in. Please save department files there instead of on your desktop. If you don't see it, sign out and back in."
+
 ## What I learned
 - Firewall rules are checked top to bottom, and the logs show which rule acted on a packet.
 - A DHCP reservation ties a MAC address to a fixed IP, and it is worth checking which DHCP service is actually running before changing anything.
@@ -111,6 +123,8 @@ All tickets were worked in my home lab on an isolated VirtualBox network: an OPN
 - Computer accounts live in Active Directory like users do, and they belong in an OU you control so Group Policy can apply to them.
 - Group Policy applies settings from the domain controller to users and computers. Account lockout and password rules for domain accounts must be set at the domain level, and `gpupdate /force` applies a change right away.
 - A locked-out account rejects even the correct password, so the first check is the account state (`LockedOut`), not the password.
+- Shared folders have two permission layers (share and NTFS), and the stricter one wins. Access goes to groups, not individual people.
+- Which users get a drive letter (the Group Policy link to an OU) is a separate question from who can open the folder (group membership). Drive maps are applied at sign-in, so users must sign out and back in after a change.
 - A packet capture shows what really crossed the wire. Filters and packet limits can hide the traffic I wanted, and the capture must be running before the action I want to record.
 - DHCP can be just a Request and ACK when a client reuses its old lease, and the ACK carries everything the client needs: address, gateway, DNS, and lease time.
 - Writing the ticket as symptom, checks, cause, fix, and message to the user forces a clear method, and it makes handing work to another technician easy.
