@@ -56,7 +56,7 @@ corp.lab
 
 ## Tools and commands used
 
-- Linux: `ip a`, `ip route`, `ping`, `dig`, `nmcli`, `resolvectl`
+- Linux: `ip a`, `ip route`, `ping`, `dig`, `nmcli`, `resolvectl`, `tcpdump`
 - Windows: `ipconfig`, `nslookup`, `whoami`, `hostname`, `dcdiag`, `gpupdate`, PowerShell (`Rename-Computer`, `Add-Computer`, `Get-ADUser`, `Get-ADGroupMember`)
 - OPNsense web GUI: firewall rules, Live View logs, Dnsmasq DHCP, Unbound DNS
 - Active Directory Users and Computers, DNS Manager, Group Policy Management
@@ -72,7 +72,7 @@ corp.lab
 | 005 | User forgot their password | Active Directory |
 | 006 | New computer needs to join the domain | Active Directory, DNS |
 | 007 | User account locked out (Group Policy lockout threshold) | Active Directory, Group Policy |
-| 008 | Packet capture of DHCP, DNS, and ICMP (in progress) | Troubleshooting |
+| 008 | Packet capture of DHCP, DNS, and ping to verify normal behavior | Troubleshooting |
 
 Full details for each are in [ticket-log.md](ticket-log.md).
 
@@ -85,10 +85,10 @@ Full details for each are in [ticket-log.md](ticket-log.md).
 - OUs organize, groups grant access, and most daily tickets are account tasks.
 - Group Policy pushes settings from the domain controller. Lockout and password rules for domain accounts are set at the domain level, and a locked account rejects even the correct password until it is unlocked.
 - When a GUI tool hangs, PowerShell can usually do the same job.
+- A packet capture shows what really crossed the wire, and it must be running before the action I want to record. It gives a known-good baseline for DHCP, DNS, and ping to compare against when something breaks.
 
 ## Next steps
 
-- Packet capture exercise (ticket 008).
 - More Group Policy: a password policy, plus a policy linked to the `Sales` or `PCs` OU such as a wallpaper or mapped drive.
 - Second internal network (`LAN-B`) with firewall rules between the two networks.
 - Monitoring, a WireGuard VPN, and Microsoft 365 admin practice.
